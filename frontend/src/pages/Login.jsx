@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {userDataContext} from "../context/UserContext"
-import authBG from "../assets/auth-bg.jpg";
+import authBG from "../assets/ai-assistant-bg.webp";
 import { IoEye, IoEyeOff } from "react-icons/io5";
 
 function Login() {
@@ -24,10 +24,13 @@ const handleLogin = async (e) => {
       { email, password },
       { withCredentials: true }
     );
+    setUserData(result.data);
     setLoading(false);
+    navigate("/");
     console.log("Login success:", result.data);
   } catch (error) {
     setLoading(false);
+    setUserData(null);
     console.error("Login error:", error.response?.data || error.message);
     setErr(error.response.data.message);
   }
@@ -38,7 +41,7 @@ const handleLogin = async (e) => {
       <div className='w-[90%] h-[600px] max-w-[500px] px-[40px] py-[30px] bg-[#2a090966] backdrop-blur shadow-lg- shadow-red flex flex-col items-center justify-center gap-[40px]'>
         <h2 className='text-white text-[30px] font-semibold'>
           Login to 
-          <span className='text-red-600'> AI Virtual Assistent</span>
+          <span className='text-sky-400'> AI Virtual Assistent</span>
         </h2>
         <form onSubmit={handleLogin} className='w-full flex flex-col items-center justify-center gap-[20px]'>
             <input type="email" placeholder='Email'  onChange={(e)=>setEmail(e.target.value)} value={email} className='w-full text-white outline-none border-2 border-white bg-transparent px-[20px] py-[10px] rounded-full text-[18px]' />
@@ -51,11 +54,11 @@ const handleLogin = async (e) => {
             {err && err.length > 0 && <p className='text-red-500'>*{err}</p>}
             <button
               className="min-w-[150px] h-[50px] mt-[30px] text-black font-semibold bg-white rounded-full text-[18px] cursor-pointer 
-              hover:bg-black hover:text-white hover:scale-105 transition-all duration-300" disabled={loading}
+              hover:bg-sky-600 hover:text-white hover:scale-105 transition-all duration-300" disabled={loading}
             > {loading ? "Loading..." : "Login"}
             </button>
 
-            <p className='text-white text-[18px]'>Want to create a New account ?  <span className='text-blue-400 cursor-pointer' onClick={()=>navigate("/signup")}>Sign Up</span>
+            <p className='text-white text-[18px]'>Want to create a New account ?  <span className='text-sky-400 cursor-pointer' onClick={()=>navigate("/signup")}>Sign Up</span>
             </p>
         </form>
 
