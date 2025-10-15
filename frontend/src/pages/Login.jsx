@@ -7,7 +7,7 @@ import { IoEye, IoEyeOff } from "react-icons/io5";
 
 function Login() {
   const [showPass, setShowPass] = useState(false);
-  const {serverUrl} = useContext(userDataContext);
+  const {serverUrl,setUserData} = useContext(userDataContext);
   const navigate = useNavigate();
   const [email, setEmail]=useState("");
   const [password, setPassword]=useState("");

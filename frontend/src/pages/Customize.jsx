@@ -7,6 +7,8 @@ import agentImage4 from '../assets/agent-4.webp'
 import agentImage5 from '../assets/agent-5.webp'
 import agentImage6 from '../assets/agent-6.webp'
 import { RiImageAiFill } from "react-icons/ri";
+import { RiArrowGoBackLine } from "react-icons/ri";
+
 import { userDataContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -19,6 +21,7 @@ function Customize() {
         backendImage, setBackendImage,
         selectedImage, setSelectedImage
     } = useContext(userDataContext);
+    const [loading, setLoading] = useState(false);
 
     const navigator = useNavigate();
     const inputImageRef = useRef();
@@ -29,7 +32,9 @@ function Customize() {
     };
 
   return (
-    <div className='w-[full] bg-gradient-to-t from-[#030326] to-[#1167f2] px-2 py-10'>
+    <div className='w-[full] bg-gradient-to-t from-[#030326] to-[#1167f2] px-2 py-10 relative'>
+        <RiArrowGoBackLine className='text-white text-2xl cursor-pointer absolute top-[50px] left-[50px]' onClick={()=>navigator("/")}/>
+    
         <h2 className='text-white text-4xl text-center font-bold'>Select Your <span className='text-[#030326]'>Assistant Image</span></h2>
         <div className='w-[100%] h-full md:w-[80%] lg:w-[70%] mx-auto flex items-center justify-center gap-4 lg:gap-10 p-10 flex-wrap'>
             <Card image={agentImage1}/>
@@ -50,16 +55,14 @@ function Customize() {
                 {frontendImage && <img src={frontendImage} alt="agent" className='w-full h-full object-cover' />}
             </div>
 
-            <input type="file" accept="image/*" hidden ref={inputImageRef} onChange={handleImageChange} />
-
             <input type="file" accept='image/*' hidden ref={inputImageRef} onChange={handleImageChange}/>
         </div>
         {selectedImage && <div className='text-center'> 
             <button
                 onClick={()=>navigator("/customize-step-2")}
                 className="min-w-[150px] h-[50px] mt-[30px] text-black font-semibold bg-white rounded-full text-[18px] cursor-pointer 
-                hover:bg-sky-600 hover:text-white hover:scale-105 transition-all duration-300" >
-                    Next
+                hover:bg-sky-600 hover:text-white hover:scale-105 transition-all duration-300" disabled={loading}>
+                    {!loading ? "Next" : "loading..."}
             </button>
         </div>}
 
